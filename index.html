@@ -6,15 +6,14 @@
   <style>
     html, body {
       height: 100%;
+      width: 100%;
       margin: 0;
       padding: 0;
     }
 
-    /* YOUR SIZE CONTROLS HERE */
     #ss_survey_widget {
       width: 100%;
-      min-height: 100vh;
-      height: auto;
+      height: 100vh;  /* full viewport height */
     }
 
     #ss_survey_widget iframe {
@@ -33,18 +32,24 @@
     </iframe>
   </div>
 
-  <!-- ✅ EITHER load the script like this ... -->
-  <script
-    async
+  <script async id="ss-widget"
     src="https://abc1234d.surveysparrow.com/widget/tt-3rFmtYANV2d?customParams={}">
   </script>
 
-  <!-- ❌ ... OR call sparrowLaunch() — but NOT BOTH -->
-  <!--
   <script>
+    function sparrowLaunch(opts) {
+      var a=document,r=window;
+      r.SS_WIDGET_TOKEN="tt-3rFmtYANV2d";
+      r.SS_ACCOUNT="abc1234d.surveysparrow.com";
+      if(!a.getElementById("ss-widget")){
+        var s=a.createElement("script");
+        s.src="https://"+r.SS_ACCOUNT+"/widget/"+r.SS_WIDGET_TOKEN+"?customParams="+JSON.stringify(opts);
+        s.async=true;
+        a.body.appendChild(s);
+      }
+    }
     sparrowLaunch({});
   </script>
-  -->
 
 </body>
 </html>
