@@ -2,33 +2,74 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Survey Test Page</title>
+  <title>Survey Page</title>
 
   <style>
-    /* page background optional */
+    /* Make the entire page fill the screen */
+    html, body {
+      height: 100%;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Style the body */
     body {
+      display: flex;
+      justify-content: center;   /* center horizontally */
+      align-items: center;       /* center vertically */
+      background: #f5f5f5;       /* light gray background */
+      font-family: Arial, sans-serif;
+    }
+
+    /* Survey container */
     #ss_survey_widget {
-      width: 400px;          /* <-- change this to the size you want */
-      height: 1200px;         /* <-- change height too */
-      margin: 0 auto;        /* center on the page */
-      background: #fff;
+      width: 100%;
+      max-width: 1200px;         /* expand width up to 1200px */
+      height: 90vh;              /* 90% of viewport height */
+      background: #ffffff;
+      border-radius: 10px;
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0,0,0,.08);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
       position: relative;
     }
-  }
+
+    /* Make the iframe fill its container */
+    #ss_survey_widget iframe {
+      width: 100% !important;
+      height: 100% !important;
+      border: none;
+    }
+
+    /* Optional: hide SurveySparrow top bar */
+    .ss_classic_top_bar_section_details {
+      display: none !important;
+    }
   </style>
-      
-    
 </head>
 <body>
-  <!-- Survey widget will load here -->
-  <div id="ss_survey_widget"></div>
 
-  <script id="SS_SCRIPT">
+  <!-- Survey widget loads here -->
+  <div id="ss_survey_widget">
+    <iframe
+      id="ss_widget_frame"
+      src="https://surveys.esurveydesigns.com/widget/Feature-Requests/tt-3rFmtYANV2d?">
+    </iframe>
+  </div>
+
+  <!-- SurveySparrow widget script -->
+  <script
+    type="text/javascript"
+    async
+    id="ss-widget"
+    src="https://abc1234d.surveysparrow.com/widget/tt-3rFmtYANV2d?customParams={}">
+  </script>
+
+  <script>
+    // Launch the widget with optional parameters
     function sparrowLaunch(opts){
       var e="ss-widget",t="script",a=document,r=window,l=localStorage;
-      var s,n,c,rm=a.getElementById('SS_SCRIPT');
+      var s,n,c,rm=a.getElementById('ss-widget');
       r.SS_WIDGET_TOKEN="tt-3rFmtYANV2d";   // replace with your real token
       r.SS_ACCOUNT="abc1234d.surveysparrow.com";
       r.SS_SURVEY_NAME="Feature-Requests";
@@ -43,19 +84,16 @@
         n.type="text/javascript";
         n.async=!0;
         n.id=e;
-        n.src=["https://","abc1234d.surveysparrow.com/widget/",r.SS_WIDGET_TOKEN,"?","customParams=",JSON.stringify(opts)].join("");
+        n.src=["https://",r.SS_ACCOUNT,"/widget/",r.SS_WIDGET_TOKEN,"?customParams=",JSON.stringify(opts)].join("");
         c.parentNode.insertBefore(n,c);
         r.SS_VARIABLES=opts;
-        rm.parentNode.removeChild(rm);
+        if(rm) rm.parentNode.removeChild(rm);
       }
-    };
+    }
+
+    // Run the widget
+    sparrowLaunch({});
   </script>
 
-  <script>
-    // Launch the widget with optional parameters
-    sparrowLaunch({
-      // e.g. userId: "123", sessionId: "abc"
-    });
-  </script>
 </body>
 </html>
